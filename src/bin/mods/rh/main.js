@@ -4,16 +4,20 @@ const routes = require ("./routes");
 
 module.exports = async function (req, res) {
 
-let {url} = req,
+let {url, method} = req,
 	file = path.resolve("src", "static", "public", url);
 
-if ( ! fs.existsSync(file)) return routes(req, res);
+console.log(method, url);
 
+if ( ! fs.existsSync(file)) return routes(req, res);
+if ( ! fs.statSync(file).isFile()) return routes(req, res);
+
+console.log("Serving Static File !");
 let content = "";
 let writeH = [200, {
 	"Content-Type" : "octet-stream"
 }];
-content = await new promise(a => fs.readFile(file, (e, d) => a(e.stack || d.toString())))
+content = fs.readFileSync(file);
 writeH[1]["Content-Length"] = fs.statSync(file).size;
 
 res.writeHead(...writeH);
