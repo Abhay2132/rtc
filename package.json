@@ -1,0 +1,12 @@
+{
+  "name": "rtc",
+  "version": "1.0.0",
+  "description": "",
+  "main": "src/app",
+  "scripts": {
+    "test": "c; nodemon --quiet ."
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}
