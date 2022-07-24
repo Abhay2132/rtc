@@ -4,7 +4,8 @@
   "description": "",
   "main": "src/app",
   "scripts": {
-    "test": "c; nodemon --quiet ."
+    "test": "c; nodemon --quiet .",
+    "start": "node ."
   },
   "keywords": [],
   "author": "",
