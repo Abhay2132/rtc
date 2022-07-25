@@ -2,7 +2,9 @@ const router = require("express").Router()
 const path = require("path");
 
 router.get("/", (req, res) => {
-	res.sendFile(path.resolve("src", "static", "public", "index.htm"));
+	let index = path.resolve("src", "static", "public", "index.htm");
+	console.log(index);
+	res.sendFile(index);
 });
 
 router.get("/getUsers", (req, res) => {
