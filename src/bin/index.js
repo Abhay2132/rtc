@@ -22,7 +22,7 @@ app.use((req, res, next) => {
 app.use(exp.static(path.resolve("src", "static", "public")));
 app.use(router);
 
-const server = isPro ? require('http').createServer(app) : require('https').createServer(options , app);
+const server = require('http').createServer(app);// isPro ? require('http').createServer(app) : require('https').createServer(options , app);
 
 const { Server } = require("socket.io");
 const io = new Server(server);

@@ -5,7 +5,7 @@
   "main": "src/app",
   "scripts": {
     "test": "c; nodemon --quiet .",
-    "start": "node ."
+    "start": "export NODE_ENV='production' ; node ."
   },
   "keywords": [],
   "author": "",
