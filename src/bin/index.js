@@ -9,11 +9,12 @@ const fs = require('fs');
 const path = require("path");
 const port = process.env.PORT || 3000;
 const router = require("./mods/router/main");
+/*
 const options = {
   key: fs.readFileSync(path.resolve("src","bin", "secrets",'key.pem')),
   cert: fs.readFileSync(path.resolve("src","bin", "secrets",'cert.pem'))
 };
-
+*/
 app.use((req, res, next) => {
 	res.on("finish", () => console.log(req.method, req.url, res.statusCode));
 	next();
