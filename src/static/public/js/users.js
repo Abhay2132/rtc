@@ -26,7 +26,7 @@ function getUsers () {
 }
 
 function setUsers ( users ) {
-	if ( users.length < 2 ) return qs("#users-list").innerHTML = '<div class="message"> Nobody is Online ! </div>'
+	if ( ! users.length || users.length < 2  ) return qs("#users-list").innerHTML = '<div class="message"> Nobody is Online ! </div>'
 	qs("#users-list").innerHTML = ''
 	users.forEach( user => {
 		if ( user == myUsername ) return;
