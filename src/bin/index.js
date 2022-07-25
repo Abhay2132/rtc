@@ -29,7 +29,12 @@ app.use(router);
 const server = require('http').createServer(app);// isPro ? require('http').createServer(app) : require('https').createServer(options , app);
 
 const { Server } = require("socket.io");
-const io = new Server(server);
+const io = new Server(server,{
+	cors: {
+    origin: "*",
+    methods: ["GET", "POST"]
+  }
+});
 
 require("./mods/socket")(io);
 server
