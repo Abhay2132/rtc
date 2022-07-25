@@ -8,7 +8,7 @@ router.get("/", (req, res) => {
 });
 
 router.get("/getUsers", (req, res) => {
-	return res.json(Object.keys(users));
+	return res.json(Object.keys(users) || {});
 });
 
 module.exports = router;
