@@ -17,8 +17,9 @@
 			</div>
 			<div class="controls">
 				<div class="sc" onclick="setCamera(1)"><img src="icons/switch-camera.png" /></div>
-				<div class="mute" onclick="toggleMute()"><img src="icons/mute.png" /></div>
-				<div class="toggle-video" onclick="toggleVideo()"><img src="icons/no-video.png" /></div>
+				<div class="torch" onclick="torch.toggle()"><img src="icons/torch.png" /></div>
+				<div class="mute" onclick="toggleMute.toggle()"><img src="icons/mute.png" /></div>
+				<div class="toggle-video" onclick="toggleVideo.toggle()"><img src="icons/no-video.png" /></div>
 				<div class="end-call" onclick="end_call()"><img src="icons/endcall.png" /></div>
 			</div>
 		</div>
@@ -26,7 +27,7 @@
 		<div class="fs-dialog-box">
 			<div class="fs-bg"></div>
 			<div class="users-dialog">
-				<h3>Enter Your Username</h3>
+				<div class="title-bar" ><button onclick="logout()" class="logout-button" > Logout</button><span >Enter Your Username</span></div>
 				<form id="login-menu" onsubmit="return false;">
 					<input id="uid" placeholder="username" required/><br>
 					<button onclick="addUser()" >Login</button>

@@ -10,12 +10,12 @@ const path = require("path");
 const port = process.env.PORT || 3000;
 const router = require("./mods/router/main");
 const cors = require("cors");
-/*
+
 const options = {
   key: fs.readFileSync(path.resolve("src","bin", "secrets",'key.pem')),
   cert: fs.readFileSync(path.resolve("src","bin", "secrets",'cert.pem'))
 };
-*/
+
 
 app.use(cors());
 app.use((req, res, next) => {
@@ -26,7 +26,7 @@ app.use((req, res, next) => {
 app.use(exp.static(path.resolve("src", "static", "public")));
 app.use(router);
 
-const server = require('http').createServer(app);// isPro ? require('http').createServer(app) : require('https').createServer(options , app);
+const server =  isPro ? require('http').createServer(app) : require('https').createServer(options , app);
 
 const { Server } = require("socket.io");
 const io = new Server(server,{

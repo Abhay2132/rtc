@@ -78,6 +78,14 @@ body {
 	width: var(--s);
 }
 
+.torch > img {
+	--s : 45px;
+	position: relative;
+	top: -2px;
+	height: var(--s);
+	width: var(--s);
+}
+
 .end-call > img {
 	height: 100%;
 	width: 100%;

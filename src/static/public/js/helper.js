@@ -40,35 +40,60 @@ async function setCamera(f = false) {
 	}
 }
 
-var muted = false;
-function toggleMute() {
-	if (!myPeerConn) return;
-	muted = !muted;
-	let sndrs = myPeerConn.getSenders();
-	sndrs.forEach((s) => {
-		if (s.track.kind == "audio") s.track.enabled = !muted;
-		let info = {};
-		info[s.track.kind] = s.track.enabled;
-		console.log(info);
-	});
-	if (muted) qs(".mute").style.background = "#ddd";
-	else qs(".mute").style.background = "transparent";
+const toggleMute = {
+	tag : qs(".mute"),
+	muted : false,
+	toggle : function toggleMute() {
+		if (!myPeerConn) return;
+		this.muted = ! this.muted;
+		this.turn(this.muted);
+		this.tag.style.background = this.muted ? "#bbb": "transparent";
+	},
+	turn : function (mute) {
+		let sndrs = myPeerConn.getSenders();
+		sndrs.forEach((s) => {
+			if (s.track.kind == "audio") s.track.enabled = ! mute;
+		});
+	},
+	reset : function () {
+		this.muted = false;
+		this.tag.style.background = "transparent";
+		if ( myPeerConn ) this.turn(false);
+	}
 }
 
-var video = true;
-function toggleVideo() {
-	if (!myPeerConn) return;
-	let sndrs = myPeerConn.getSenders();
-	video = ! video;
-	sndrs.forEach((s) => {
-		if (s.track.kind == "video") s.track.enabled = video;
-		let info = {};
-		info[s.track.kind] = s.track.enabled;
-		console.log(info);
-	});
-	qs(".toggle-video").style.background = video ? "transparent" : "#ddd";
+const toggleVideo = {
+	tag : qs(".toggle-video"),
+	video : true,
+	toggle : function () {
+		if (!myPeerConn) return;
+		let sndrs = myPeerConn.getSenders();
+		this.video = ! this.video;
+		sndrs.forEach((s) => {
+			if (s.track.kind == "video") s.track.enabled = this.video;
+		});
+		this.tag.style.background = this.video ? "transparent" : "#bbb";
+	},
+	reset : function () {
+		this.video = true;
+		this.tag.style.background = "transparent";
+	}
 }
 
+const torch = {
+	tag : qs(".torch"),
+	isOn : false,
+	toggle : function () {
+		if ( ! src || facingMode == "user") return;
+         this.isOn = ! this.isOn;
+		src.getVideoTracks()[0]
+		.applyConstraints({
+            advanced: [{torch: this.isOn}]
+          });
+          this.tag.style.background = this.isOn ? "#bbb" : "transparent";
+	}
+}
+ 
 var istoggleSrc = false;
 function toggleSrc () {
 	let lc = local.className

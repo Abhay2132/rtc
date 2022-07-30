@@ -10,18 +10,22 @@ io.on('connection', (socket) => {
 	socket.on("video-answer", handle_msg);
 	socket.on("new-ice-candidate", handle_msg)
 	socket.on("end-call", handle_msg);
-	socket.on("new-user", (uid) => {
+	socket.on("new-user", (uid = "") => {
+		uid = uid.replace(/\s/g, "");
 		if ( Object.keys(users).includes(uid) ) return socket.emit("login-error" , "Username already exists !");
 		users[uid] = socket.id;
 		socket.emit("user-added");
 		console.log("user %s connected", uid, users);
 		socket.broadcast.emit("new-user", Object.keys(users));
 	});
+
+	const del_user = () => {
+		console.log("delete %s",socket.id);
+		for(let user in users ) if ( users[user] == socket.id ) delete users[user]
+		socket.broadcast.emit("new-user", Object.keys(users));
+	}
 	
-	socket.on("disconnect", () => {
-	console.log("disconnected %s",socket.id);
-	for(let user in users ) if ( users[user] == socket.id ) delete users[user]
-	socket.broadcast.emit("new-user", Object.keys(users));
-});
+	socket.on("disconnect", del_user);
+	socket.on("logout", del_user);
 });
 }

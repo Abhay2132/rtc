@@ -1,5 +1,5 @@
 function addUser () {
-	let unm = qs("#uid").value;
+	let unm = qs("#uid").value.replace(/\s/g, '');
 	if ( ! unm ) return;
 	socket.emit("new-user", unm);
 	myUsername = unm;
@@ -19,7 +19,8 @@ socket.on("login-error", e => alert(e));
 function getUsers () {
 	qs("#login-menu").style.display = "none";
 	qs("#users-list").style.display = "block";
-	qs(".users-dialog > h3").textContent = "Online Users ! ";
+	qs(".title-bar > span").textContent = "Online Users ! ";
+	qs(".title-bar > button").style.display = "block"
 	fetch("/getUsers")
 	.then(data => data.json())
 	.then(setUsers);
@@ -43,7 +44,8 @@ function callUser (button, user) {
 	targetUsername = user;
 	invite ();
 	remote.callback = () => {
-		button.textContent = "CALL"
+		button.textContent = "CALL";
+		toggleMute.reset();
 	}
 }
 
@@ -57,6 +59,21 @@ function onCallEnd () {
 	remote.srcObject = null;
 	local.srcObject = null;
 	myPeerConn = null
+	if (src) src.getTracks().forEach(t => t.stop());
+	src = null;
+	toggleMute.reset();
+	toggleVideo.reset();
 	qs(".fs-dialog-box").style.display = "flex";
 }
 socket.on("end-call", onCallEnd);
+
+function logout () {
+	qs("#login-menu").style.display = "block";
+	qs("#users-list").style.display = "none";
+	qs(".title-bar > span").textContent = "Enter Your Username";
+	qs(".title-bar > button").style.display = "none"
+	
+	socket.emit("logout");
+}
+
+logout ();
